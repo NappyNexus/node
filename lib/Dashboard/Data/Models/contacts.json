@@ -1,0 +1,17 @@
+[
+    {
+      "id": 1,
+      "name": "John Doe",
+      "profilePicture": "https://example.com/images/john_doe.jpg",
+      "phoneNumber": "+1234567890",
+      "tag": "Friend"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "profilePicture": "https://example.com/images/jane_smith.jpg",
+      "phoneNumber": "+0987654321",
+      "tag": "Mother"
+    }
+  ]
+  

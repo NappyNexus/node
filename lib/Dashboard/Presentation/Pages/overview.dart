@@ -24,10 +24,11 @@ class _OverviewState extends ConsumerState<Overview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: const Color.fromARGB(255, 97, 97, 97),
       body: Column(
         children: [
           Row(
+            // mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 margin: const EdgeInsets.all(20),
@@ -48,94 +49,415 @@ class _OverviewState extends ConsumerState<Overview> {
               ),
             ],
           ),
+
+          // First row of options
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              DropdownButton2<String>(
-                isExpanded: true,
-                hint: const Row(
-                  children: [
-                    Icon(
-                      Icons.list,
-                      size: 16,
-                      color: Colors.yellow,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Select Item',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.yellow,
+              //first group
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Row(
+                        children: [
+                          const Icon(
+                            Icons.search,
+                            size: 25,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Contacts',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      items: items
+                          .map((String item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
+                          .toList(),
+                      value: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                      buttonStyleData: ButtonStyleData(
+                        height: 45,
+                        width: 200,
+                        padding: const EdgeInsets.only(left: 14, right: 14),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                          ),
+                          border: Border.all(
+                            color: const Color(0xFF26282A),
+                          ),
+                          color: const Color(0xFF1A1C1E),
                         ),
-                        overflow: TextOverflow.ellipsis,
+                        elevation: 0,
+                      ),
+                      iconStyleData: const IconStyleData(
+                        icon: Icon(
+                          Icons.arrow_drop_down_sharp,
+                        ),
+                        iconSize: 40,
+                        iconEnabledColor: Colors.white,
+                        // iconDisabledColor: Colors.blue,
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        maxHeight: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: const Color(0xFF1A1C1E),
+                        ),
+                        offset: const Offset(-20, 0),
+                        scrollbarTheme: ScrollbarThemeData(
+                          radius: const Radius.circular(40),
+                          thickness: WidgetStateProperty.all(6),
+                          thumbVisibility: WidgetStateProperty.all(true),
+                        ),
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        height: 40,
+                        padding: EdgeInsets.only(left: 14, right: 14),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 250,
+                    child: TextField(
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Buscar contacto...',
+                      ),
+                    ),
+                  )
+                ],
+              ),
+
+              //Second Group
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.person_pin,
+                    size: 50,
+                  ),
+                  Text(
+                    'Fulanito de Tal',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const Icon(Icons.arrow_drop_down)
+                ],
+              ),
+            ],
+          ),
+
+          //Next Row
+          //Container Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              //First Group
+              Row(
+                children: [
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Row(
+                        children: [
+                          const Icon(
+                            Icons.person,
+                            size: 25,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Todos los Contactos',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      items: items
+                          .map((String item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
+                          .toList(),
+                      value: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                      buttonStyleData: ButtonStyleData(
+                        height: 45,
+                        width: 302,
+                        padding: const EdgeInsets.only(left: 14, right: 14),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                          ),
+                          border: Border.all(
+                            color: const Color(0xFF26282A),
+                          ),
+                          color: const Color(0xFF1A1C1E),
+                        ),
+                        elevation: 0,
+                      ),
+                      iconStyleData: const IconStyleData(
+                        icon: Icon(
+                          Icons.arrow_drop_down_sharp,
+                        ),
+                        iconSize: 40,
+                        iconEnabledColor: Colors.white,
+                        // iconDisabledColor: Colors.blue,
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        maxHeight: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: const Color(0xFF1A1C1E),
+                        ),
+                        offset: const Offset(-20, 0),
+                        scrollbarTheme: ScrollbarThemeData(
+                          radius: const Radius.circular(40),
+                          thickness: WidgetStateProperty.all(6),
+                          thumbVisibility: WidgetStateProperty.all(true),
+                        ),
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        height: 40,
+                        padding: EdgeInsets.only(left: 14, right: 14),
+                      ),
+                    ),
+                  ),
+                  const VerticalDivider(
+                    width: 20,
+                    thickness: 1,
+                    indent: 20,
+                    endIndent: 0,
+                    color: Color.fromARGB(255, 255, 0, 0),
+                  ),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Row(
+                        children: [
+                          // const Icon(
+                          //   Icons.person,
+                          //   size: 25,
+                          //   color: Colors.white,
+                          // ),
+                          // const SizedBox(
+                          //   width: 10,
+                          // ),
+                          Expanded(
+                            child: Text(
+                              'Estatus',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      items: items
+                          .map((String item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
+                          .toList(),
+                      value: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                      buttonStyleData: ButtonStyleData(
+                        height: 45,
+                        width: 150,
+                        padding: const EdgeInsets.only(left: 14, right: 14),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                          ),
+                          border: Border.all(
+                            color: const Color(0xFF26282A),
+                          ),
+                          color: const Color(0xFF1A1C1E),
+                        ),
+                        elevation: 0,
+                      ),
+                      iconStyleData: const IconStyleData(
+                        icon: Icon(
+                          Icons.arrow_drop_down_sharp,
+                        ),
+                        iconSize: 40,
+                        iconEnabledColor: Colors.white,
+                        // iconDisabledColor: Colors.blue,
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        maxHeight: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: const Color(0xFF1A1C1E),
+                        ),
+                        offset: const Offset(-20, 0),
+                        scrollbarTheme: ScrollbarThemeData(
+                          radius: const Radius.circular(40),
+                          thickness: WidgetStateProperty.all(6),
+                          thumbVisibility: WidgetStateProperty.all(true),
+                        ),
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        height: 40,
+                        padding: EdgeInsets.only(left: 14, right: 14),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              //Second Group
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text('Nuevo Contacto'),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                      )),
+                ],
+              )
+            ],
+          ),
+
+          // Table Over Bar
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 1),
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Row(
+                  children: [
+                    Text(
+                      "3 contactos seleccionados",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        // Handle Edit action
+                      },
+                      child: const Text(
+                        "Edit",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    TextButton(
+                      onPressed: () {
+                        // Handle Delete action
+                      },
+                      child: const Text(
+                        "Delete",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    TextButton(
+                      onPressed: () {
+                        // Handle Select all action
+                      },
+                      child: const Text(
+                        "Select all 930 entries",
+                        style: TextStyle(
+                            color: Colors.white,
+                            decoration: TextDecoration.underline),
                       ),
                     ),
                   ],
                 ),
-                items: items
-                    .map((String item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ))
-                    .toList(),
-                value: selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    selectedValue = value;
-                  });
-                },
-                buttonStyleData: ButtonStyleData(
-                  height: 50,
-                  width: 160,
-                  padding: const EdgeInsets.only(left: 14, right: 14),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: Colors.black26,
-                    ),
-                    color: Colors.redAccent,
-                  ),
-                  elevation: 2,
-                ),
-                iconStyleData: const IconStyleData(
-                  icon: Icon(
-                    Icons.arrow_forward_ios_outlined,
-                  ),
-                  iconSize: 14,
-                  iconEnabledColor: Colors.yellow,
-                  iconDisabledColor: Colors.grey,
-                ),
-                dropdownStyleData: DropdownStyleData(
-                  maxHeight: 200,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: Colors.redAccent,
-                  ),
-                  offset: const Offset(-20, 0),
-                  scrollbarTheme: ScrollbarThemeData(
-                    radius: const Radius.circular(40),
-                    thickness: MaterialStateProperty.all(6),
-                    thumbVisibility: MaterialStateProperty.all(true),
-                  ),
-                ),
-                menuItemStyleData: const MenuItemStyleData(
-                  height: 40,
-                  padding: EdgeInsets.only(left: 14, right: 14),
-                ),
-              ),
-            ],
+              ],
+            ),
           )
         ],
       ),
