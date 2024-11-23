@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:node/Styles/colors.dart';
+import 'package:node/Dashboard/Data/Models/contact.dart';
+// import 'package:node/Styles/colors.dart';
 
 class Overview extends ConsumerStatefulWidget {
   const Overview({super.key});
@@ -20,6 +23,45 @@ class _OverviewState extends ConsumerState<Overview> {
     'Desconocidos',
   ];
   String? selectedValue;
+
+  //Start Data Model
+  List<Contact> contacts = [];
+  Map<int, bool> selectedContacts = {};
+
+  @override
+  void initState() {
+    super.initState();
+    loadContacts();
+  }
+
+  void loadContacts() async {
+    // Mock loading JSON (Replace with Supabase integration later)
+    String data = '''
+      [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "profilePicture": "https://example.com/images/john_doe.jpg",
+          "phoneNumber": "+1234567890",
+          "tag": "Friend"
+        },
+        {
+          "id": 2,
+          "name": "Jane Smith",
+          "profilePicture": "https://example.com/images/jane_smith.jpg",
+          "phoneNumber": "+0987654321",
+          "tag": "Mother"
+        }
+      ]
+    ''';
+
+    List<dynamic> jsonResult = jsonDecode(data);
+    setState(() {
+      contacts = jsonResult.map((json) => Contact.fromJson(json)).toList();
+    });
+  }
+
+  //End Data Model
 
   @override
   Widget build(BuildContext context) {
@@ -458,7 +500,46 @@ class _OverviewState extends ConsumerState<Overview> {
                 ),
               ],
             ),
-          )
+          ),
+
+          //Table
+          SingleChildScrollView(
+            child: DataTable(
+              columns: const [
+                DataColumn(label: Text('Select')),
+                DataColumn(label: Text('Profile')),
+                DataColumn(label: Text('Phone Number')),
+                DataColumn(label: Text('Tag')),
+              ],
+              rows: contacts.map((contact) {
+                return DataRow(cells: [
+                  DataCell(
+                    Checkbox(
+                      value: selectedContacts[contact.id] ?? false,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          selectedContacts[contact.id] = value ?? false;
+                        });
+                      },
+                    ),
+                  ),
+                  DataCell(
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(contact.profilePicture),
+                        ),
+                        SizedBox(width: 8),
+                        Text(contact.name),
+                      ],
+                    ),
+                  ),
+                  DataCell(Text(contact.phoneNumber)),
+                  DataCell(Text(contact.tag)),
+                ]);
+              }).toList(),
+            ),
+          ),
         ],
       ),
     );
