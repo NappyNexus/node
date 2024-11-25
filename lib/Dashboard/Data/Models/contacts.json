@@ -2,14 +2,16 @@
     {
       "id": 1,
       "name": "John Doe",
-      "profilePicture": "https://example.com/images/john_doe.jpg",
+      "profilePicture": "",
+      "email": "chiqsrskipper@gmail.com",
       "phoneNumber": "+1234567890",
       "tag": "Friend"
     },
     {
       "id": 2,
       "name": "Jane Smith",
-      "profilePicture": "https://example.com/images/jane_smith.jpg",
+      "profilePicture": "",
+      "email": "nappy@gmail.com",
       "phoneNumber": "+0987654321",
       "tag": "Mother"
     }
